@@ -1,3 +1,4 @@
+import 'package:arz/logic/cache/prefs.dart';
 import 'package:arz/ui/view/main_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,8 @@ void main() async {
   );
 
   await Firebase.initializeApp();
+
+  await Prefs.init();
 
   runApp(MyApp());
 }

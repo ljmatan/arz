@@ -37,21 +37,19 @@ class _WebViewScreenState extends State<WebViewScreen> {
   @override
   void initState() {
     super.initState();
-
     _pullToRefreshController = PullToRefreshController(
       options: PullToRefreshOptions(
-        color: Colors.blue,
+        color: const Color(0xff4c87b1),
       ),
       onRefresh: () async {
         if (io.Platform.isAndroid)
           _webViewController?.reload();
-        else if (io.Platform.isIOS) {
+        else if (io.Platform.isIOS)
           _webViewController?.loadUrl(
             urlRequest: URLRequest(
               url: await _webViewController?.getUrl(),
             ),
           );
-        }
       },
     );
   }

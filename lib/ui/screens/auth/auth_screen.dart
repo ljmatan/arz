@@ -1,4 +1,5 @@
-import 'package:arz/ui/screens/auth/login/login_page.dart';
+import 'package:arz/ui/screens/auth/login_page.dart';
+import 'package:arz/ui/screens/auth/register_page.dart';
 import 'package:flutter/material.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -11,14 +12,19 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   final _pagecontroller = PageController();
 
+  void _goToPage(int page) => _pagecontroller.animateToPage(page,
+      duration: const Duration(milliseconds: 300), curve: Curves.ease);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: PageView(
         controller: _pagecontroller,
+        scrollDirection: Axis.vertical,
         children: [
-          LoginPage(),
+          LoginPage(goToPage: _goToPage),
+          RegisterPage(goToPage: _goToPage),
         ],
       ),
     );

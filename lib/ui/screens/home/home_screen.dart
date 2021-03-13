@@ -1,5 +1,5 @@
-import 'dart:math';
-
+import 'package:arz/logic/cache/prefs.dart';
+import 'package:arz/ui/screens/home/slide_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -209,79 +209,88 @@ class HomeScreen extends StatelessWidget {
               padding: EdgeInsets.zero,
               onReorder: (oldIndex, newIndex) {},
               itemBuilder: (context, i) => ListTile(
-                key: ValueKey(Random().nextInt(100)),
+                // Values must be updated to unique ones
+                key: ValueKey(Prefs.instance?.getInt('$i' + 'value') ?? i),
                 tileColor: Colors.transparent,
-                title: Padding(
-                  padding: EdgeInsets.only(top: i == 0 ? 12 : 0),
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(color: Colors.white),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(40, 20, 20, 20),
-                          child: Stack(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 16),
-                                child: Text(
-                                  'RADIUS',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
+                title: SlideTile(
+                  menuItems: [const SizedBox()],
+                  child: Padding(
+                    padding: EdgeInsets.only(top: i == 0 ? 12 : 0),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(color: Colors.white),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(40, 20, 20, 20),
+                            child: Stack(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 16),
+                                  child: Text(
+                                    'RADIUS',
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Text(
-                                'Pac',
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                              Positioned(
-                                bottom: 0,
-                                right: 0,
-                                child: Text(
-                                  '5 HRS',
+                                Text(
+                                  'Pac',
                                   style: const TextStyle(fontSize: 12),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        CupertinoSwitch(
-                          value: Random().nextBool(),
-                          activeColor: Theme.of(context).primaryColor,
-                          onChanged: (activated) {},
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 20, 40, 20),
-                          child: Stack(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 16),
-                                child: Text(
-                                  'NONE',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: Text(
+                                    '5 HRS',
+                                    style: const TextStyle(fontSize: 12),
                                   ),
                                 ),
-                              ),
-                              Text(
-                                'Pac',
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                              Positioned(
-                                bottom: 0,
-                                right: 0,
-                                child: Text(
-                                  'NA',
+                              ],
+                            ),
+                          ),
+                          StatefulBuilder(
+                            builder: (context, newState) => CupertinoSwitch(
+                              value: Prefs.instance?.getBool('$i') ?? false,
+                              activeColor: Theme.of(context).primaryColor,
+                              onChanged: (activated) async {
+                                await Prefs.instance?.setBool('$i', activated);
+                                newState(() {});
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 20, 40, 20),
+                            child: Stack(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 16),
+                                  child: Text(
+                                    'NONE',
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  'Pac',
                                   style: const TextStyle(fontSize: 12),
                                 ),
-                              ),
-                            ],
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: Text(
+                                    'NA',
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

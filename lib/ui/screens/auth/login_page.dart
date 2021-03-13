@@ -6,6 +6,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
+  final Function(int)? goToPage;
+
+  LoginPage({@required this.goToPage});
+
   @override
   State<StatefulWidget> createState() {
     return _LoginPageState();
@@ -48,7 +52,6 @@ class _LoginPageState extends State<LoginPage> {
                         Padding(
                           padding: const EdgeInsets.only(top: 16, bottom: 12),
                           child: TextField(
-                            //autofocus: true,
                             controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(hintText: 'Email'),
@@ -65,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                             children: [
                               Expanded(
                                 child: GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
                                   child: SizedBox(
                                     width: MediaQuery.of(context).size.width,
                                     height: 56,
@@ -79,6 +83,11 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                     ),
                                   ),
+                                  onTap: () {
+                                    final Function(int)? goToPage =
+                                        widget.goToPage;
+                                    if (goToPage != null) goToPage(1);
+                                  },
                                 ),
                               ),
                               Expanded(
@@ -150,14 +159,55 @@ class _LoginPageState extends State<LoginPage> {
                             IconButton(
                               iconSize: 33,
                               icon: Icon(CustomIcons.facebook),
-                              onPressed: () async {},
+                              onPressed: () async {
+                                showDialog(
+                                  context: context,
+                                  barrierColor: Colors.white70,
+                                  barrierDismissible: false,
+                                  builder: (context) => WillPopScope(
+                                    child: Center(
+                                        child: CircularProgressIndicator()),
+                                    onWillPop: () async => false,
+                                  ),
+                                );
+                                bool? response;
+                                try {
+                                  response = await AuthAPI.fbLogin();
+                                } catch (e) {
+                                  response = false;
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text('$e')));
+                                }
+                                Navigator.pop(context);
+                                if (response == true) {}
+                              },
                             ),
                             const SizedBox(width: 12),
                             IconButton(
                               iconSize: 33,
                               icon: Icon(CustomIcons.google),
                               onPressed: () async {
-                                // await AuthAPI.googleLogin();
+                                showDialog(
+                                  context: context,
+                                  barrierColor: Colors.white70,
+                                  barrierDismissible: false,
+                                  builder: (context) => WillPopScope(
+                                    child: Center(
+                                        child: CircularProgressIndicator()),
+                                    onWillPop: () async => false,
+                                  ),
+                                );
+                                bool? response;
+                                try {
+                                  response = await AuthAPI.googleLogin();
+                                } catch (e) {
+                                  response = false;
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text('$e')));
+                                }
+                                Navigator.pop(context);
+                                if (response == true)
+                                  MainViewController.change(HomeScreen());
                               },
                             ),
                           ],
