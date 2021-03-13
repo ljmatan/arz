@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "987506909592",
+    "project_id": "arun-arz",
+    "storage_bucket": "arun-arz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:987506909592:android:a43a322425d01f1d238bed",
+        "android_client_info": {
+          "package_name": "arun.arz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "987506909592-bs3mok3kv4rtkeqc4c76qq4n533kksk0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxQk34QByvWdVtWr9mcesFNinY4YzWDkE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "987506909592-bs3mok3kv4rtkeqc4c76qq4n533kksk0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
