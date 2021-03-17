@@ -30,36 +30,46 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.fromLTRB(
+                    18, MediaQuery.of(context).padding.top, 18, 0),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
+                    color: Colors.white,
                     boxShadow: kElevationToShadow[2],
-                    borderRadius: BorderRadius.circular(18),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 14, top: 4),
+                          child: Text(
+                            'Register',
+                            style: TextStyle(
+                              fontSize: 23,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
                         TextField(
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(hintText: 'Email'),
+                          decoration: InputDecoration(labelText: 'Email'),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           child: TextField(
                             obscureText: true,
                             controller: _passwordController,
-                            decoration: InputDecoration(hintText: 'Password'),
+                            decoration: InputDecoration(labelText: 'Password'),
                           ),
                         ),
                         TextField(
                           obscureText: true,
                           controller: _confirmPasswordController,
                           decoration:
-                              InputDecoration(hintText: 'Repeat Password'),
+                              InputDecoration(labelText: 'Repeat Password'),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 18),
@@ -94,7 +104,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   child: DecoratedBox(
                                     decoration: BoxDecoration(
                                       color: Theme.of(context).primaryColor,
-                                      borderRadius: BorderRadius.circular(12),
+                                      borderRadius: BorderRadius.circular(28),
                                       boxShadow: kElevationToShadow[2],
                                     ),
                                     child: SizedBox(

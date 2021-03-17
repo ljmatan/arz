@@ -17,6 +17,16 @@ abstract class AuthAPI {
     }
   }
 
+  static Future<bool> sendPasswordResetEmail(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      return true;
+    } catch (e) {
+      print('$e');
+    }
+    return false;
+  }
+
   static Future<UserCredential?> createUsingEmail(
       String email, String password) async {
     try {

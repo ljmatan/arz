@@ -26,6 +26,7 @@ class _MainViewState extends State<MainView> {
         builder: (context, AsyncSnapshot<Widget> view) =>
             view.data ?? const SizedBox(),
       ),
+      endDrawerEnableOpenDragGesture: false,
       endDrawer: Drawer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
