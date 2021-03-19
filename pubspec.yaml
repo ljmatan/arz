@@ -19,6 +19,7 @@ dependencies:
   flutter_inappwebview: ^5.1.0+4
   permission_handler: ^6.1.0
   shared_preferences: ^2.0.4
+  sign_in_with_apple: ^3.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,5 @@
+import 'dart:io' as io;
+
 import 'package:arz/logic/auth/auth.dart';
 import 'package:arz/shared/custom_icons.dart';
 import 'package:arz/ui/screens/auth/reset_password_dialog.dart';
@@ -180,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                                       onWillPop: () async => false,
                                     ),
                                   );
-                                  bool? response;
+                                  late bool response;
                                   try {
                                     response = await AuthAPI.fbLogin();
                                   } catch (e) {
@@ -189,9 +191,44 @@ class _LoginPageState extends State<LoginPage> {
                                         SnackBar(content: Text('$e')));
                                   }
                                   Navigator.pop(context);
-                                  if (response == true) {}
+                                  if (response == true)
+                                    // If login is successful
+                                    MainViewController.change(HomeScreen());
                                 },
                               ),
+                              if (io.Platform.isIOS) const SizedBox(width: 12),
+                              if (io.Platform.isIOS)
+                                IconButton(
+                                  iconSize: 44,
+                                  icon: Icon(
+                                    CustomIcons.apple,
+                                    color: Colors.black45,
+                                  ),
+                                  onPressed: () async {
+                                    showDialog(
+                                      context: context,
+                                      barrierColor: Colors.white70,
+                                      barrierDismissible: false,
+                                      builder: (context) => WillPopScope(
+                                        child: Center(
+                                            child: CircularProgressIndicator()),
+                                        onWillPop: () async => false,
+                                      ),
+                                    );
+                                    bool? response;
+                                    try {
+                                      response = await AuthAPI.appleLogin();
+                                    } catch (e) {
+                                      response = false;
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                              SnackBar(content: Text('$e')));
+                                    }
+                                    Navigator.pop(context);
+                                    if (response == true)
+                                      MainViewController.change(HomeScreen());
+                                  },
+                                ),
                               const SizedBox(width: 12),
                               IconButton(
                                 iconSize: 44,

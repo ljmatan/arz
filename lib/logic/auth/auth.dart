@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 abstract class AuthAPI {
   static UserCredential? _instance;
@@ -79,6 +80,23 @@ abstract class AuthAPI {
           print("login failed");
           break;
       }
+    }
+
+    return false;
+  }
+
+  static Future<bool> appleLogin() async {
+    try {
+      final credential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+      print(credential);
+      return true;
+    } catch (e) {
+      print('$e');
     }
 
     return false;
